@@ -1,11 +1,11 @@
 from microbit import *
-
+import speech
 # Define the weather icons
-sun = Image('00000:'
-            '00900:'
-            '09990:'
-            '00900:'
-            '00000:')
+sun = Image("90909:"
+            "09990:"
+            "99099:"
+            "09990:"
+            "90909:")
 few = Image('04040:'
             '44444:'
             '04040:'
@@ -41,11 +41,7 @@ snow = Image('70707:'
              '70707:'
              '07070:'
              '70707:')
-mist = Image('22222:'
-             '33333:'
-             '22222:'
-             '33333:'
-             '22222:')
+mist = Image('33333:44444:33333:44444:33333:')
 
 # Mapping of weather descriptions to icons
 weather_icons = {
@@ -59,7 +55,17 @@ weather_icons = {
     b'snow': snow,
     b'mist': mist
 }
-
+weather_sounds = {
+    b'clear sky': 'Hello, the weather is clear.',
+    b'few clouds': 'There are a few clouds.',
+    b'scattered clouds': 'The sky is scattered with clouds.',
+    b'broken clouds': 'There are broken clouds.',
+    b'shower rain': 'It is showering rain.',
+    b'rain': 'It is raining.',
+    b'thunderstorm': 'There is a thunderstorm.',
+    b'snow': 'It is snowing.',
+    b'mist': 'It is misty.'
+}
 while True:
     if True:
         display.show(mist)
@@ -72,6 +78,9 @@ while True:
             uart.write(bytestring)
             
             display.show(weather_icons.get(bytestring, mist))
+
+            sound = weather_sounds.get(bytestring, 'The weather condition is unknown.')
+            speech.say(sound)
         #if bytestring:
         sleep(1000)
        

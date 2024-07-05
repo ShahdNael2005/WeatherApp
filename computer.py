@@ -34,5 +34,6 @@ microbit_address = '40:00:02:48:8c:20'
 # Disconnect from the micro:bit
 #ubit.disconnect()
 
-with serial.Serial('COM5', 9600, timeout=1) as ser:
+with serial.Serial('COM6', 115200, timeout=10) as ser:
     ser.write(weather_message.encode('ascii'))
+    print(ser.read(100))
