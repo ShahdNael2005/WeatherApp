@@ -1,5 +1,6 @@
 import pyowm
-from bluezero import microbit
+#from bluezero import microbit # type: ignore
+import serial
 
 # OpenWeatherMap API key
 KEY = '7fe781e473b58cb1f0f08e4e10f48183'
@@ -16,19 +17,22 @@ observation = mgr.weather_at_place(location)
 weather = observation.weather
 
 # Format the weather message
-weather_message = f'Weather: {weather.detailed_status}, Temp: {weather.temperature("celsius")["temp"]:.1f}C'
+weather_message = f'Weather: {weather.detailed_status}, Temp: {weather.temperature("celsius")["temp"]:.1f}C\n'
 
 # Replace with the Bluetooth address of your micro:bit
-microbit_address = 'XX:XX:XX:XX:XX:XX'
+microbit_address = '40:00:02:48:8c:20'
 
 # Create a micro:bit object
-ubit = microbit.Microbit(microbit_address)
+#ubit = microbit.Microbit(microbit_address)
 
 # Connect to the micro:bit
-ubit.connect()
+#ubit.connect()
 
 # Send weather data to the micro:bit
-ubit.uart.write(weather_message)
+#ubit.uart.write(weather_message)
 
 # Disconnect from the micro:bit
-ubit.disconnect()
+#ubit.disconnect()
+
+with serial.Serial('COM5', 9600, timeout=1) as ser:
+    ser.write(weather_message.encode('ascii'))
